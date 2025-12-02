@@ -8,6 +8,8 @@ const app = new Elysia()
       prefix: "/",
     })
   )
+  .get("/:id", ({ params }) => `${params.id}`)
+  .post("/", () => "Hello World!")
   .listen(3000);
 
 console.log(

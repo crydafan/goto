@@ -3,9 +3,265 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>goto</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Monaco", "Menlo", "Courier New", monospace;
+        background: #0d1117;
+        color: #c9d1d9;
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: #58a6ff;
+        margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: normal;
+      }
+
+      h1::before {
+        content: "$ ";
+        color: #8b949e;
+      }
+
+      .subtitle {
+        color: #8b949e;
+        margin-bottom: 40px;
+        font-size: 14px;
+      }
+
+      .input-group {
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        color: #8b949e;
+        font-size: 12px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        background: #0d1117;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        color: #c9d1d9;
+        font-family: "Monaco", "Menlo", "Courier New", monospace;
+        font-size: 14px;
+        outline: none;
+        margin-bottom: 15px;
+      }
+
+      input:focus {
+        border-color: #58a6ff;
+        box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+      }
+
+      button {
+        padding: 10px 20px;
+        background: #238636;
+        color: #fff;
+        border: 1px solid #2ea043;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: "Monaco", "Menlo", "Courier New", monospace;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      button:hover {
+        background: #2ea043;
+      }
+
+      .result {
+        display: none;
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-left: 3px solid #238636;
+        border-radius: 6px;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .result.show {
+        display: block;
+      }
+
+      .result-label {
+        color: #8b949e;
+        font-size: 12px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .result-label::before {
+        content: "✓ ";
+        color: #238636;
+      }
+
+      .short-link-container {
+        background: #0d1117;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .short-link {
+        flex: 1;
+        color: #58a6ff;
+        font-size: 16px;
+        text-decoration: none;
+        word-break: break-all;
+      }
+
+      .copy-btn {
+        padding: 6px 12px;
+        background: #21262d;
+        border: 1px solid #30363d;
+        font-size: 12px;
+      }
+
+      .copy-btn:hover {
+        background: #30363d;
+      }
+
+      .copied {
+        background: #238636 !important;
+        border-color: #2ea043 !important;
+      }
+
+      .stats {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #21262d;
+        color: #8b949e;
+        font-size: 12px;
+      }
+
+      ::placeholder {
+        color: #6e7681;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello, World!</h1>
+    <div class="container">
+      <header>
+        <h1>goto</h1>
+        <p class="subtitle">// link shortener</p>
+      </header>
+
+      <main>
+        <div class="input-group">
+          <label>url</label>
+          <input
+            type="url"
+            id="urlInput"
+            placeholder="https://example.com/very/long/url/that/needs/shortening"
+            autofocus
+          />
+          <button onclick="shortenUrl()">shorten</button>
+        </div>
+
+        <div class="result" id="result">
+          <p class="result-label">shortened</p>
+          <div class="short-link-container">
+            <a class="short-link" id="shortLink" target="_blank"></a>
+            <button class="copy-btn" onclick="copyLink()">copy</button>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="stats">
+          <p>// mock data in use</p>
+          <p>// press enter or click button to shorten</p>
+          <p>// @crydafan on X</p>
+        </div>
+      </footer>
+    </div>
+    <script>
+      const mockShortLinks = [
+        "go.to/a1b2c3",
+        "go.to/x9y8z7",
+        "go.to/d4e5f6",
+        "go.to/g7h8i9",
+        "go.to/j0k1l2",
+        "go.to/m3n4o5",
+        "go.to/p6q7r8",
+      ];
+
+      function getRandomShortLink() {
+        return mockShortLinks[
+          Math.floor(Math.random() * mockShortLinks.length)
+        ];
+      }
+
+      function shortenUrl() {
+        const input = document.getElementById("urlInput");
+        const url = input.value.trim();
+
+        if (!url) {
+          alert("// error: url required");
+          return;
+        }
+
+        try {
+          new URL(url);
+        } catch {
+          alert("// error: invalid url format");
+          return;
+        }
+
+        const shortLink = getRandomShortLink();
+        const resultDiv = document.getElementById("result");
+        const shortLinkElement = document.getElementById("shortLink");
+
+        shortLinkElement.textContent = shortLink;
+        shortLinkElement.href = url;
+        resultDiv.classList.add("show");
+      }
+
+      function copyLink() {
+        const shortLink = document.getElementById("shortLink").textContent;
+        navigator.clipboard.writeText(shortLink).then(() => {
+          const btn = event.target;
+          btn.textContent = "copied!";
+          btn.classList.add("copied");
+          setTimeout(() => {
+            btn.textContent = "copy";
+            btn.classList.remove("copied");
+          }, 2000);
+        });
+      }
+
+      document.getElementById("urlInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          shortenUrl();
+        }
+      });
+    </script>
   </body>
 </html>

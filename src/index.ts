@@ -1,8 +1,8 @@
 import { Elysia, redirect, status, t } from "elysia";
 import { staticPlugin } from "@elysiajs/static";
-import { db } from "./db";
+import { db } from "./lib/db";
 import { eq } from "drizzle-orm";
-import { shortLinksTable } from "./db/schema";
+import { shortLinksTable } from "./lib/db/schema";
 import { randomUUIDv7 } from "bun";
 
 const generateShortCode = () => randomUUIDv7().replaceAll("-", "").slice(0, 16);

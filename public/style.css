@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Monaco", "Menlo", "Courier New", monospace;
+  background: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #58a6ff;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+h1::before {
+  content: "$ ";
+  color: #8b949e;
+}
+
+.subtitle {
+  color: #8b949e;
+  margin-bottom: 40px;
+  font-size: 14px;
+}
+
+.input-group {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  color: #8b949e;
+  font-size: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #c9d1d9;
+  font-family: "Monaco", "Menlo", "Courier New", monospace;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 15px;
+}
+
+input:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+button {
+  padding: 10px 20px;
+  background: #238636;
+  color: #fff;
+  border: 1px solid #2ea043;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: "Monaco", "Menlo", "Courier New", monospace;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #2ea043;
+}
+
+.result {
+  display: none;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-left: 3px solid #238636;
+  border-radius: 6px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.result.show {
+  display: block;
+}
+
+.result-label {
+  color: #8b949e;
+  font-size: 12px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.result-label::before {
+  content: "✓ ";
+  color: #238636;
+}
+
+.short-link-container {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.short-link {
+  flex: 1;
+  color: #58a6ff;
+  font-size: 16px;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.copy-btn {
+  padding: 6px 12px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  font-size: 12px;
+}
+
+.copy-btn:hover {
+  background: #30363d;
+}
+
+.copied {
+  background: #238636 !important;
+  border-color: #2ea043 !important;
+}
+
+.stats {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #21262d;
+  color: #8b949e;
+  font-size: 12px;
+}
+
+::placeholder {
+  color: #6e7681;
+}

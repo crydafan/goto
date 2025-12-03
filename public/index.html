@@ -219,7 +219,7 @@
         ];
       }
 
-      function shortenUrl() {
+      async function shortenUrl() {
         const input = document.getElementById("urlInput");
         const url = input.value.trim();
 
@@ -228,14 +228,33 @@
           return;
         }
 
+        let shortLink = "";
+
         try {
           new URL(url);
+
+          const response = await fetch("/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ url }),
+          });
+
+          if (!response.ok) {
+            alert("// error: failed to shorten url");
+            return;
+          }
+
+          const data = await response.json();
+          if (data) {
+            shortLink = `${window.location.origin}/${data.short}`;
+          }
         } catch {
           alert("// error: invalid url format");
           return;
         }
 
-        const shortLink = getRandomShortLink();
         const resultDiv = document.getElementById("result");
         const shortLinkElement = document.getElementById("shortLink");
 

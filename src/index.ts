@@ -30,7 +30,7 @@ const app = new Elysia()
     async ({ body }) => {
       const short = generateShortCode();
 
-      return await db
+      const result = await db
         .insert(shortLinksTable)
         .values({
           original: body.url,
@@ -41,6 +41,8 @@ const app = new Elysia()
           short: shortLinksTable.short,
           createdAt: shortLinksTable.createdAt,
         });
+
+      return result[0];
     },
     {
       body: t.Object({
